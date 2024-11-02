@@ -8,9 +8,9 @@ import { createClient, UploadOptions } from './deploygate/client';
 import { sleep } from './sleep';
 import { UploadResponse } from './deploygate/upload_response';
 
-(async () => {
+void (async () => {
   try {
-    const options = await parseInputs();
+    const options = parseInputs();
 
     core.debug('the current inputs:');
     core.debug(
@@ -50,7 +50,7 @@ import { UploadResponse } from './deploygate/upload_response';
     fs.writeFileSync(tmpFile.name, JSON.stringify(uploadResponse));
 
     let outputs: Outputs = {
-      response_json_path: tmpFile.name, // eslint-disable-line @typescript-eslint/camelcase
+      response_json_path: tmpFile.name,
       pinned: false,
       uploaded: false,
     };
@@ -66,15 +66,15 @@ import { UploadResponse } from './deploygate/upload_response';
       outputs = {
         ...outputs,
         uploaded: true,
-        package_name: app.package_name, // eslint-disable-line @typescript-eslint/camelcase
-        download_url: app.file, // eslint-disable-line @typescript-eslint/camelcase
+        package_name: app.package_name,
+        download_url: app.file,
       };
 
       if (app.distribution) {
         outputs = {
           ...outputs,
-          distribution_key: app.distribution.access_key, // eslint-disable-line @typescript-eslint/camelcase
-          distribution_url: app.distribution.url, // eslint-disable-line @typescript-eslint/camelcase
+          distribution_key: app.distribution.access_key,
+          distribution_url: app.distribution.url,
         };
       }
 
@@ -105,7 +105,7 @@ import { UploadResponse } from './deploygate/upload_response';
 
     for (const key of Object.keys(outputs)) {
       // round to null
-      const value = (outputs as any)[key] || null; // eslint-disable-line @typescript-eslint/no-explicit-any
+      const value = (outputs as Record<string, any>)[key] || null; // eslint-disable-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
       core.debug(`Output: ${key} => ${value}`);
       core.setOutput(key, value);
     }
@@ -124,7 +124,11 @@ import { UploadResponse } from './deploygate/upload_response';
         throw new Error('got an error from the DeployGate server');
       }
     }
-  } catch (error) {
-    core.setFailed(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
   }
 })();

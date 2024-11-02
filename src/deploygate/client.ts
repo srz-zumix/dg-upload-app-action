@@ -8,7 +8,7 @@ import { UploadResponse } from './upload_response';
 import { PinResponse } from './pin_response';
 import { Response, ErrorResponse } from './response';
 
-const visibilities = ['public', 'private'] as const;
+const visibilities = ['public', 'private'] as const; // eslint-disable-line @typescript-eslint/no-unused-vars
 export type Visibility = typeof visibilities[number];
 
 export interface ClientOptions {
@@ -60,9 +60,11 @@ async function normalizeResponse<T>(
     } else {
       return response.data;
     }
-  } catch (e) {
-    if (e.response && e.response.data) {
-      return (e.response.data as unknown) as ErrorResponse;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e) && e.response && e.response.data) {
+      if (e.response && e.response.data) {
+        return (e.response.data as unknown) as ErrorResponse;
+      }
     }
 
     throw e;
@@ -112,14 +114,14 @@ export const createClient: (options: ClientOptions) => Client = options => {
       const request = instance.post(`/users/${appOwnerName}/apps`, form, {
         headers: form.getHeaders(),
       });
-      return normalizeResponse(request);
+      return normalizeResponse(request); // eslint-disable-line @typescript-eslint/no-unsafe-argument
     },
     pin: async (appOwnerName: string, osName: string, packageName: string, revision: number) => {
       const request = instance.post(
         `/users/${appOwnerName}/platforms/${osName.toLowerCase()}/apps/${packageName}/binaries/${revision}/protect`,
         {},
       );
-      return normalizeResponse(request);
+      return normalizeResponse(request); // eslint-disable-line @typescript-eslint/no-unsafe-argument
     },
   };
 };

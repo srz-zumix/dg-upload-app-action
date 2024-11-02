@@ -20,14 +20,14 @@ See *action.yml* of your version.
 
 Please make sure your workflow will run when a branch is pushed.
 
-```
+```yaml
 on:
   push or pull_request
 ```
 
 Add this action to steps.
 
-```
+```yaml
 uses: jmatsu/dg-upload-app-action@<version>
   with:
     app_owner_name: <your DeployGate account/organization name>
@@ -47,7 +47,8 @@ NOTE: [versioning documentation](https://github.com/actions/toolkit/blob/master/
 
 Actions are run from GitHub repos so we will checkin the packed dist folder. 
 
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
+Then run [ncc](https://github.com/vercel/ncc) and push the results:
+
 ```bash
 # Edit VERSION to the latest version e.g. v0.2.1
 $ git switch [-c] releases/v0.2
