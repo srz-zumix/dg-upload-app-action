@@ -46,6 +46,7 @@ export const createAxiosInstance: AxiosFactory = (baseURL, token) => {
     },
     maxBodyLength: 5 * 1024 * 1024 * 1024,
     maxContentLength: 5 * 1024 * 1024 * 1024,
+    maxRedirects: 0,
   });
 };
 
