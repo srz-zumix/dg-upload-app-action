@@ -25,16 +25,8 @@ on:
 
 Add this action to steps.
 
-<<<<<<< Updated upstream
-```yaml
-uses: jmatsu/dg-upload-app-action@<version>
-||||||| Stash base
-```
-uses: jmatsu/dg-upload-app-action@<version>
-=======
 ```yaml
 uses: srz-zumix/dg-upload-app-action@<version>
->>>>>>> Stashed changes
   with:
     app_owner_name: <your DeployGate account/organization name>
     api_token: ${{ secrets.DEPLOYGATE_API_TOKEN }} # for example
