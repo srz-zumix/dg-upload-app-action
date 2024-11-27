@@ -1,13 +1,6 @@
 name: "build-test"
 on:
   pull_request:
-    types: [opened, ready_for_review, synchronize]
-  push:
-    branches:
-      - master
-      - 'releases/*'
-    tags:
-      - v*
 
 jobs:
   build:
