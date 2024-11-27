@@ -6,7 +6,7 @@ import { parseBooleanInput, parseInputs } from '../src/inputs';
 
 type getInputType = (name: string) => string;
 
-const mockGetInput = (core.getInput as unknown) as jest.Mock<string>;
+const mockGetInput = core.getInput as unknown as jest.Mock<string>;
 
 describe('#parseBooleanInput', () => {
   it('should be the default value if empty string', () => {

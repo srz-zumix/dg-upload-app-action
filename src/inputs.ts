@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 
 const distributionTypes = ['key', 'name'] as const;
-export type DistributionType = typeof distributionTypes[number];
+export type DistributionType = (typeof distributionTypes)[number];
 
 export interface DistributionOptions {
   findBy: DistributionType;
@@ -28,7 +28,7 @@ export const parseBooleanInput: (input: string, options: { defaultValue: boolean
   return input === '' ? defaultValue : input === 'true' || input === 'yes' || input === 'y';
 };
 
-export const parseInputs: () => Promise<Options> = async () => {
+export const parseInputs = (): Options => {
   // Required options
   const apiToken = core.getInput('api_token', { required: true });
   const appOwnerName = core.getInput('app_owner_name', { required: true });
@@ -40,8 +40,8 @@ export const parseInputs: () => Promise<Options> = async () => {
   const ignoreApiFailure = parseBooleanInput(core.getInput('ignore_api_failure'), { defaultValue: false });
 
   // Distribution options
-  const rawDistributionFindBy: DistributionType | string = core.getInput('distribution_find_by');
-  const findBy: DistributionType | null = distributionTypes.includes(rawDistributionFindBy as DistributionType)
+  const rawDistributionFindBy: string = core.getInput('distribution_find_by');
+  const findBy: DistributionType | null = (distributionTypes as readonly string[]).includes(rawDistributionFindBy)
     ? (rawDistributionFindBy as DistributionType)
     : null;
   const distributionValue = core.getInput('distribution_id');
@@ -60,7 +60,6 @@ export const parseInputs: () => Promise<Options> = async () => {
     disableIOSNotification,
     visible,
     distribution,
-    releaseNote,
     ignoreApiFailure,
   };
 };

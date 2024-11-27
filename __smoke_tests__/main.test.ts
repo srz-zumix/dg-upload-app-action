@@ -21,13 +21,13 @@ const runAction: (options: { expectSuccess: boolean }) => string = ({ expectSucc
     expect(expectSuccess).toBeTruthy();
 
     return stdout;
-  } catch (e) {
+  } catch (e: unknown) {
     if (expectSuccess) {
-      console.log('unexpected failure exec', e, e.stdout.toString(), e.stderr.toString());
+      console.log('unexpected failure exec', e, (e as any).stdout.toString(), (e as any).toString());
     }
     expect(expectSuccess).toBeFalsy();
 
-    return e.stderr;
+    return (e as any).stderr;
   }
 };
 

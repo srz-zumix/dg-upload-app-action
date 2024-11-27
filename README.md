@@ -20,14 +20,14 @@ See *action.yml* of your version.
 
 Please make sure your workflow will run when a branch is pushed.
 
-```
+```yaml
 on:
   push or pull_request
 ```
 
 Add this action to steps.
 
-```
+```yaml
 uses: jmatsu/dg-upload-app-action@<version>
   with:
     app_owner_name: <your DeployGate account/organization name>
