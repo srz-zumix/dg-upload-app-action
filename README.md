@@ -45,18 +45,4 @@ NOTE: [versioning documentation](https://github.com/actions/toolkit/blob/master/
 
 ## Release
 
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/vercel/ncc) and push the results:
-
-```bash
-# Edit VERSION to the latest version e.g. v0.2.1
-$ git switch [-c] releases/v0.2
-$ yarn release
-$ git add dist
-$ git commit -m "updates the production distribution"
-$ git tag <version>
-$ git push origin releases/v0.2
-```
-
-NOTE: [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
+run [Release Drafter](./actions/workflows/release-drafter.yml)
