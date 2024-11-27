@@ -6,11 +6,9 @@
 
 This action uploads an application file to DeployGate. (Not official action of DeployGate.)
 
-NOTE: `v0.2` does not have a backward compatibility with `v0.1`.
-
 ## Versions
 
-See [Releases](https://github.com/jmatsu/dg-upload-app-action/releases) page.
+See [Releases](https://github.com/srz-zumix/dg-upload-app-action/releases) page.
 
 ## Inputs and Outpus
 
@@ -27,8 +25,16 @@ on:
 
 Add this action to steps.
 
+<<<<<<< Updated upstream
 ```yaml
 uses: jmatsu/dg-upload-app-action@<version>
+||||||| Stash base
+```
+uses: jmatsu/dg-upload-app-action@<version>
+=======
+```yaml
+uses: srz-zumix/dg-upload-app-action@<version>
+>>>>>>> Stashed changes
   with:
     app_owner_name: <your DeployGate account/organization name>
     api_token: ${{ secrets.DEPLOYGATE_API_TOKEN }} # for example
